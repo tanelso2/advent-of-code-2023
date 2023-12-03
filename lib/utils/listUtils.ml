@@ -70,9 +70,9 @@ let all (l: 'a list) ~(f: 'a -> bool) =
     false
   | None -> true
 
-  let permutations' l = Combinat.permutations l
+let permutations' l = Combinat.permutations l
 
-  let rec permutations l =
+let rec permutations l =
     let n = List.length l in
     if n = 1 then [l] else
     let rec sub e = function
