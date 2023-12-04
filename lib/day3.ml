@@ -22,6 +22,9 @@ let parse_line y (s: string) : (symbol list * part_number list) =
     let syms = ref [] in
     let nums = ref [] in
     let current_first: loc option ref = ref None in
+    let start_number x =
+        current_first := Some (x,y)
+    in
     let finish_number x =
         match !current_first with
         | None -> ()
@@ -34,11 +37,14 @@ let parse_line y (s: string) : (symbol list * part_number list) =
                 nums := new_num::!nums;
                 current_first := None
     in
-    let f x c =
+    let add_symbol (x,y) c : unit =
+        syms := ((x,y),c)::!syms
+    in
+    let parse_char x c =
         if Char.is_digit c
         then begin
             match !current_first with
-            | None -> current_first := Some (x,y)
+            | None -> start_number x
             | Some _ -> () (* Do nothing, progress on to next char *)
         end
         else begin
@@ -46,10 +52,10 @@ let parse_line y (s: string) : (symbol list * part_number list) =
             match c with
             | '.' -> ()
             (* Add new symbol if not a period *)
-            | _ -> syms := ((x,y),c)::!syms
+            | _ -> add_symbol (x,y) c
         end
     in
-    String.iteri ~f:f s;
+    String.iteri ~f:parse_char s;
     finish_number (String.length s - 1);
     (!syms, !nums)
 
