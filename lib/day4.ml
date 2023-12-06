@@ -46,7 +46,7 @@ let part1 (s:string) =
     |> ListUtils.sum
 
 let inc (a: int array) (idx: int) (n: int) : unit =
-    a.(idx-1) <- a.(idx-1) + n
+    a.(idx) <- a.(idx) + n
 
 let inc_many (a: int array) (start: int) (n: int) (multiplier: int) : unit =
     let rec helper n =
@@ -61,10 +61,9 @@ let process_cards rounds =
     let n = List.length rounds in
     let card_counts = Array.init n ~f:(fun _ -> 1) in
     let f i (wn,hn) =
-       let idx = i + 1 in
        let matches = number_of_matches wn hn in
        let number_of_this_card = card_counts.(i) in
-       inc_many card_counts idx matches number_of_this_card
+       inc_many card_counts i matches number_of_this_card
     in
     List.iteri ~f:f rounds;
     Array.fold ~init:0 ~f:(+) card_counts
