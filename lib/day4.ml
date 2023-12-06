@@ -60,18 +60,14 @@ let inc_many (a: int array) (start: int) (n: int) (multiplier: int) : unit =
 let process_cards rounds =
     let n = List.length rounds in
     let card_counts = Array.init n ~f:(fun _ -> 1) in
-    let rec helper (i: int) (rounds: card_pair list) =
-       match rounds with
-       | (wn,hn)::rest -> (
-           let matches = number_of_matches wn hn in
-           let number_of_this_card = card_counts.(i-1) in
-           inc_many card_counts i matches number_of_this_card;
-           helper (i+1) rest
-       )
-       | [] -> Array.fold ~init:0 ~f:(+) card_counts
+    let f i (wn,hn) =
+       let idx = i + 1 in
+       let matches = number_of_matches wn hn in
+       let number_of_this_card = card_counts.(i) in
+       inc_many card_counts idx matches number_of_this_card
     in
-    helper 1 rounds
-
+    List.iteri ~f:f rounds;
+    Array.fold ~init:0 ~f:(+) card_counts
 
 let part2 (s:string) =
     let rounds = parse_input s in
