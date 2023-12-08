@@ -50,6 +50,8 @@ let max_by_exn l ~key_fn:f =
   | Some x -> x
   | None -> failwith "max_by_exn failed"
 
+let max_exn = max_by_exn ~key_fn:(fun x -> x)
+
 let min_by l ~key_fn:f = max_by l ~key_fn:(fun a -> f a |> Int.neg)
 
 let min_by_exn l ~key_fn:f =

@@ -7,6 +7,8 @@ module Heaps = Heaps
 include ListUtils
 module ListUtils = ListUtils
 
+module IntUtils = IntUtils
+
 include FunUtils
 include FunUtils.Ops
 module FunUtils = FunUtils
