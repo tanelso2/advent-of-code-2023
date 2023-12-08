@@ -41,8 +41,17 @@ let%expect_test "part1" =
      | Some x -> Stdio.printf "%d\n" x);
     [%expect {| 251287184 |}]
 
+let%expect_test "calc_hand_type2" =
+    Stdio.printf "%s\n" @@ [%show: hand_type] @@ calc_hand_type2 ['J';'J';'J';'K';'K'];
+    [%expect {| Day7.FiveOfAKind |}];
+    Stdio.printf "%s\n" @@ [%show: hand_type] @@ calc_hand_type2 ['K';'T';'J';'J';'T'];
+    [%expect {| Day7.FourOfAKind |}];
+    ()
+
 let%expect_test "part2" =
+    Stdio.printf "%d\n" @@ part2 example_input;
+    [%expect {| 5905 |}];
     (match part2' () with
      | None -> ()
      | Some x -> Stdio.printf "%d\n" x);
-    [%expect {| |}]
+    [%expect {| 250757288 |}]
