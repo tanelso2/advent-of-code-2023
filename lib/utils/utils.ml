@@ -35,6 +35,8 @@ module IntPair = IntPair
 
 module StringPair = StringPair 
 
+module RingBuffer = RingBuffer
+
 module Map = struct
   open! Base
   include Map
